@@ -4,34 +4,34 @@ import com.example.algorithms2.Exception.ElementNotFoundException;
 import com.example.algorithms2.Exception.InvalidIndexException;
 import com.example.algorithms2.Exception.ItemNullException;
 import com.example.algorithms2.Exception.StorageIsFullException;
-import com.example.algorithms2.Interface.StringList;
+import com.example.algorithms2.Interface.IntegerList;
 
 import java.util.Arrays;
 
-public class StringListImp implements StringList {
-    private final String[] storage;
+public class IntegerListImp implements IntegerList {
+    private final Integer[] storage;
     private int size;
 
-    public StringListImp() {
-        storage = new String[10];
+    public IntegerListImp() {
+        storage = new Integer[10];
     }
-    public StringListImp(int initSize){
-        storage = new String[initSize];
+    public IntegerListImp(int initSize){
+        storage = new Integer[initSize];
     }
 
     @Override
-    public String add(String item) {
-        checkItem(item);
+    public Integer add(Integer item) {
+        checkItem(String.valueOf(item));
         checkSize();
         storage[size++] = item;
         return item;
     }
 
     @Override
-    public String add(int index, String item) {
+    public Integer add(int index, Integer item) {
         checkSize();
         checkIndex(index);
-        checkItem(item);
+        checkItem(String.valueOf(item));
         if (index == size){
             storage[size++] = item;
             return item;
@@ -43,8 +43,8 @@ public class StringListImp implements StringList {
     }
 
     @Override
-    public String remove(String item) {
-        checkItem(item);
+    public Integer remove(Integer item) {
+        checkItem(String.valueOf(item));
         int index = indexOf(item);
         if(index == -1){
             throw new ElementNotFoundException("элемент не найден");
@@ -59,9 +59,9 @@ public class StringListImp implements StringList {
     }
 
     @Override
-    public String remove(int index) {
+    public Integer remove(int index) {
         checkIndex(index);
-        String item = storage[index];
+        Integer item = storage[index];
         if(index != size){
             System.arraycopy(storage,index+1,storage,index,size-(index+1));}
         size--;
@@ -69,12 +69,12 @@ public class StringListImp implements StringList {
     }
 
     @Override
-    public boolean contains(String item) {
+    public boolean contains(Integer item) {
         return indexOf(item) != -1;
     }
 
     @Override
-    public int indexOf(String item) {
+    public int indexOf(Integer item) {
         for (int i = 0; i < size ; i++) {
             if(storage[i].equals(item)){
                 return i;
@@ -84,7 +84,7 @@ public class StringListImp implements StringList {
     }
 
     @Override
-    public int lastIndexOf(String item) {
+    public int lastIndexOf(Integer item) {
         for (int i = size-1; i>=0 ; i--) {
             if (storage[i].equals(item)){
                 return i;
@@ -94,13 +94,13 @@ public class StringListImp implements StringList {
     }
 
     @Override
-    public String get(int index) {
+    public Integer get(int index) {
         checkIndex(index);
         return storage[index];
     }
 
     @Override
-    public String set(int index, String item) {
+    public Integer set(int index, Integer item) {
         checkIndex(index);
         checkItem(item);
         storage[index]=item;
@@ -108,7 +108,7 @@ public class StringListImp implements StringList {
     }
 
     @Override
-    public boolean equals(StringList otherList) {
+    public boolean equals(IntegerList otherList) {
         return Arrays.equals(this.toArray(),otherList.toArray());
     }
 
@@ -128,7 +128,7 @@ public class StringListImp implements StringList {
     }
 
     @Override
-    public String[] toArray() {
+    public Integer[] toArray() {
         return Arrays.copyOf(storage,size());
     }
     private void checkSize(){
