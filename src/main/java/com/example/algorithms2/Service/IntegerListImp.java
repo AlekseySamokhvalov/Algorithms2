@@ -102,7 +102,7 @@ public class IntegerListImp implements IntegerList {
     @Override
     public Integer set(int index, Integer item) {
         checkIndex(index);
-        checkItem(item);
+        checkItem(String.valueOf(item));
         storage[index]=item;
         return item;
     }
