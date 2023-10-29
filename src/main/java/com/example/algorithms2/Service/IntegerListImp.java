@@ -7,6 +7,7 @@ import com.example.algorithms2.Exception.StorageIsFullException;
 import com.example.algorithms2.Interface.IntegerList;
 
 import java.util.Arrays;
+import java.util.Random;
 
 public class IntegerListImp implements IntegerList {
     private final Integer[] storage;
@@ -180,7 +181,8 @@ public class IntegerListImp implements IntegerList {
         return false;
     }
 
-    private static void sortBubble(Integer[] arr) {
+
+    public static void sortBubble(Integer[] arr) {
         for (int i = 0; i < arr.length - 1; i++) {
             for (int j = 0; j < arr.length - 1 - i; j++) {
                 if (arr[j] > arr[j + 1]) {
@@ -189,7 +191,7 @@ public class IntegerListImp implements IntegerList {
             }
         }
     }
-    private static void sortSelection(Integer[] arr) {
+    public static void sortSelection(Integer[] arr) {
         for (int i = 0; i < arr.length - 1; i++) {
             int minElementIndex = i;
             for (int j = i + 1; j < arr.length; j++) {
@@ -200,7 +202,7 @@ public class IntegerListImp implements IntegerList {
             swapElements(arr, i, minElementIndex);
         }
     }
-    private static void sortInsertion(Integer[] arr) {
+    public static void sortInsertion(Integer[] arr) {
         for (int i = 1; i < arr.length; i++) {
             int temp = arr[i];
             int j = i;
@@ -215,5 +217,15 @@ public class IntegerListImp implements IntegerList {
         int tmp = arr[indexA];
         arr[indexA] = arr[indexB];
         arr[indexB] = tmp;
+    }
+
+    // Метод для генерации массива из случайных элементов
+    public static Integer[] generateRandomArray(int size) {
+        Random random = new Random();
+        Integer[] array = new Integer[size];
+        for (int i = 0; i < size; i++) {
+            array[i] = random.nextInt();
+        }
+        return array;
     }
 }
