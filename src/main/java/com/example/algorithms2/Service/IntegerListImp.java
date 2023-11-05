@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class IntegerListImp implements IntegerList {
-    private final Integer[] storage;
+    private Integer[] storage;
     private int size;
 
     public IntegerListImp() {
@@ -22,15 +22,15 @@ public class IntegerListImp implements IntegerList {
 
     @Override
     public Integer add(Integer item) {
+        growIfNeed();
         checkItem(String.valueOf(item));
-        checkSize();
         storage[size++] = item;
         return item;
     }
 
     @Override
     public Integer add(int index, Integer item) {
-        checkSize();
+        growIfNeed();
         checkIndex(index);
         checkItem(String.valueOf(item));
         if (index == size){
@@ -140,6 +140,11 @@ public class IntegerListImp implements IntegerList {
             throw new StorageIsFullException("в массиве нет свободного места");
         }
     }
+    private void growIfNeed(){
+        if(size()==storage.length){
+            grow();
+        }
+    }
     private void checkItem(String item){
         if (item == null){
             throw new ItemNullException("элемент отсутствует");
@@ -151,6 +156,8 @@ public class IntegerListImp implements IntegerList {
         }
     }
     private void sort(Integer[] arr){
+        quickSort(arr, 0, arr.length - 1);
+        /*
         for (int i = 1; i < arr.length; i++) {
             int temp = arr[i];
             int j = i;
@@ -160,6 +167,30 @@ public class IntegerListImp implements IntegerList {
             }
             arr[j] = temp;
         }
+         */
+    }
+    private void quickSort(Integer[] arr, int begin, int end){
+        if (begin < end) {
+            int partitionIndex = partition(arr, begin, end);
+
+            quickSort(arr, begin, partitionIndex - 1);
+            quickSort(arr, partitionIndex + 1, end);
+        }
+    }
+    private int partition(Integer[] arr, int begin, int end) {
+        int pivot = arr[end];
+        int i = (begin - 1);
+
+        for (int j = begin; j < end; j++) {
+            if (arr[j] <= pivot) {
+                i++;
+
+                swapElements(arr, i, j);
+            }
+        }
+
+        swapElements(arr, i + 1, end);
+        return i + 1;
     }
     private boolean binarySearch(Integer[] arr, Integer item){
         int min = 0;
@@ -227,5 +258,9 @@ public class IntegerListImp implements IntegerList {
             array[i] = random.nextInt();
         }
         return array;
+    }
+
+    private void grow(){
+        storage = Arrays.copyOf(storage, size + size / 2);
     }
 }
